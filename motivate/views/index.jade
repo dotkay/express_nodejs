@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  h1= title
+  <hr>
+  script.
+    function addquote() {
+      document.getElementsByClassName('addquote')[0].style.display='block';
+      document.getElementsByClassName('showquote')[0].style.display='none';
+      window.location.href='addquote';
+    }
+    function showquote() {
+      document.getElementsByClassName('addquote')[0].style.display='none';
+      document.getElementsByClassName('showquote')[0].style.display='block';
+      window.location.href='showquote';
+    }
+  container.options
+    a.btn.btn-sm.btn-primary(onclick='showquote()', href="/showquote") Show me a Quote
+    a.btn.btn-sm.btn-primary(onclick='addquote()') Post a Quote
+  <hr>
+  container.showquote
+    p(style='white-space:pre;')= quote
+    if qauth
+      p(align='right') --#{qauth}
+  container
+    form.addquote(action='/addquote', method="post", hidden='true')
+      .form-group
+        textarea.form-control(type="text", name="quotetext", placeholder="Add your quote here...")
+      .form-group
+        input.form-control(type="text", name="quoteauthor", placeholder="Add the author of the quote")
+      button.btn.btn-primary(type='submit') Post Quote
